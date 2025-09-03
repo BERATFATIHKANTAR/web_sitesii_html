@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sepetiniz - Profesyonel</title>
+  <style>
+    /* Temel Reset ve font */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f6f8;
+      color: #333;
+      padding: 40px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    /* Sepet konteyner */
+    #cart-container {
+      width: 100%;
+      max-width: 900px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+      padding: 25px 30px;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Sepet boş mesaj */
+    #cart-container.empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #7f8c8d;
+      font-size: 1.3rem;
+      font-weight: 600;
+      min-height: 300px;
+      gap: 15px;
+    }
+    #cart-container.empty img {
+      max-width: 140px;
+      opacity: 0.4;
+    }
+
+    /* Her ürün kartı */
+    .cart-item {
+      display: flex;
+      gap: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 18px 15px;
+      transition: box-shadow 0.3s ease;
+      background: #fafafa;
+      align-items: center;
+    }
+    .cart-item:hover {
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Resim stili */
+    .cart-item img {
+      width: 120px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 10px;
+      flex-shrink: 0;
+      border: 1px solid #ddd;
+    }
+
+    /* Ürün detayları */
+    .cart-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .cart-details h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #34495e;
+      user-select: none;
+    }
+    .cart-details p.desc {
+      font-size: 0.9rem;
+      color: #606f7b;
+      line-height: 1.3;
+      user-select: none;
+    }
+
+    /* Fiyat */
+    .price {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #27ae60;
+      user-select: none;
+    }
+
+    /* Adet seçici */
+    .quantity-controller {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      user-select: none;
+    }
+
+    .quantity-controller button {
+      border: 1px solid #ccc;
+      background: white;
+      color: #333;
+      font-weight: 700;
+      font-size: 1.2rem;
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+    }
+    .quantity-controller button:hover {
+      background: #27ae60;
+      color: white;
+      border-color: #27ae60;
+    }
+    .quantity-controller input {
+      width: 50px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 1rem;
+      text-align: center;
+      user-select: text;
+    }
+
+    /* Sil butonu */
+    .remove-btn {
+      background: transparent;
+      border: none;
+      color: #e74c3c;
+      font-size: 1.5rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      margin-left: 15px;
+      flex-shrink: 0;
+      user-select: none;
+    }
+    .remove-btn:hover {
+      color: #c0392b;
+    }
+
+    /* Toplam alanı */
+    .total-container {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 30px;
+      padding: 25px 30px;
+      border-radius: 12px;
+      background: #27ae60;
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: right;
+      box-shadow: 0 10px 25px rgba(39, 174, 96, 0.4);
+      user-select: none;
+    }
+
+    /* Temizle butonu */
+    .clear-btn {
+      margin-top: 35px;
+      padding: 14px 30px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(231, 76, 60, 0.5);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      max-width: 900px;
+      width: 100%;
+    }
+    .clear-btn:hover {
+      background: #c0392b;
+      box-shadow: 0 10px 20px rgba(192, 57, 43, 0.7);
+    }
+
+    /* Sepeti Onayla Butonu */
+    .confirm-btn {
+      background-color: #28a745; /* yeşil ton */
+      color: white;
+      padding: 14px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 15px;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 8px 18px rgba(40, 167, 69, 0.5);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .confirm-btn:hover:not(:disabled) {
+      background-color: #218838; /* daha koyu yeşil */
+      box-shadow: 0 10px 22px rgba(33, 136, 56, 0.7);
+    }
+    .confirm-btn:disabled {
+      background-color: #94d3a2;
+      cursor: not-allowed;
+      box-shadow: none;
+      opacity: 0.6;
+    }
+    .btn-return {
+      display: inline-block;
+      padding: 12px 28px;
+      background-color: #3498db;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 5px 12px rgba(52, 152, 219, 0.4);
+      user-select: none;
+    }
+    .btn-return:hover {
+      background-color: #217dbb;
+      box-shadow: 0 8px 20px rgba(33, 125, 187, 0.6);
+    }
+    .btn-return:active {
+      background-color: #1b5d8a;
+      box-shadow: 0 3px 6px rgba(27, 93, 138, 0.8);
+    }
+
+    /* Responsive */
+    @media (max-width: 650px) {
+      body {
+        padding: 20px 15px;
+      }
+      #cart-container {
+        padding: 20px 15px;
+      }
+      .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .cart-item img {
+        width: 100%;
+        height: auto;
+        max-height: 180px;
+        margin-bottom: 15px;
+      }
+      .remove-btn {
+        align-self: flex-end;
+        margin-left: 0;
+      }
+      .total-container {
+        font-size: 1.4rem;
+        padding: 20px 15px;
+      }
+      .clear-btn, .confirm-btn {
+        font-size: 1rem;
+        padding: 12px 20px;
+      }
+      
+    }
+  </style>
+</head>
+<body>
+  <div style="text-align: center; margin-bottom: 30px;">
+    <a href="ürünler.html" class="btn-return">Alışverişe geri dön</a>
+  </div>
+  <h1>Sepetiniz</h1>
+  <div id="cart-container"></div>
+  <div class="total-container" id="total-price">Toplam Tutar: ₺0.00</div>
+  <button class="clear-btn" id="clear-cart-btn">Sepeti Temizle</button>
+  <button class="confirm-btn" id="confirm-cart-btn" disabled>Sepeti Onayla</button>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const container = document.getElementById("cart-container");
+    const totalPriceElement = document.getElementById("total-price");
+    const clearBtn = document.getElementById("clear-cart-btn");
+    const confirmBtn = document.getElementById("confirm-cart-btn");
+
+    function parsePrice(priceStr) {
+      // Fiyat stringinden sayıya çevirme
+      return parseFloat(priceStr.replace(/[^\d,]/g, "").replace(",", ".")) || 0;
+    }
+
+    function updateCartDisplay() {
+      container.innerHTML = "";
+      if (cart.length === 0) {
+        container.classList.add("empty");
+        container.innerHTML = `
+          <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Boş Sepet" />
+          <p>Sepetiniz şu anda boş.</p>
+        `;
+        totalPriceElement.textContent = "Toplam Tutar: ₺0.00";
+        clearBtn.disabled = true;
+        clearBtn.style.opacity = "0.5";
+        confirmBtn.disabled = true;
+        confirmBtn.style.opacity = "0.6";
+        return;
+      }
+      container.classList.remove("empty");
+      clearBtn.disabled = false;
+      clearBtn.style.opacity = "1";
+      confirmBtn.disabled = false;
+      confirmBtn.style.opacity = "1";
+
+      let total = 0;
+      cart.forEach((item, index) => {
+        const priceNum = parsePrice(item.price);
+        const quantity = item.quantity || 1;
+        total += priceNum * quantity;
+
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
+
+        itemDiv.innerHTML = `
+          <img src="${item.image}" alt="${item.title}" />
+          <div class="cart-details">
+            <h3>${item.title}</h3>
+            <p class="desc">${item.desc}</p>
+            <p class="price">Birim Fiyat: ${item.price}</p>
+            <div class="quantity-controller">
+              <button class="qty-decrease" aria-label="Adet azalt">−</button>
+              <input type="number" min="1" value="${quantity}" aria-label="Ürün adedi"/>
+              <button class="qty-increase" aria-label="Adet artır">+</button>
+            </div>
+          </div>
+          <button class="remove-btn" title="Ürünü kaldır">×</button>
+        `;
+
+        const decreaseBtn = itemDiv.querySelector(".qty-decrease");
+        const increaseBtn = itemDiv.querySelector(".qty-increase");
+        const quantityInput = itemDiv.querySelector("input[type=number]");
+        const removeBtn = itemDiv.querySelector(".remove-btn");
+
+        decreaseBtn.addEventListener("click", () => {
+          let currentQty = parseInt(quantityInput.value);
+          if (currentQty > 1) {
+            quantityInput.value = currentQty - 1;
+            cart[index].quantity = currentQty - 1;
+            saveCart();
+            updateCartDisplay();
+          }
+        });
+
+        increaseBtn.addEventListener("click", () => {
+          let currentQty = parseInt(quantityInput.value);
+          quantityInput.value = currentQty + 1;
+          cart[index].quantity = currentQty + 1;
+          saveCart();
+          updateCartDisplay();
+        });
+
+        quantityInput.addEventListener("change", () => {
+          let val = parseInt(quantityInput.value);
+          if (isNaN(val) || val < 1) val = 1;
+          quantityInput.value = val;
+          cart[index].quantity = val;
+          saveCart();
+          updateCartDisplay();
+        });
+
+        removeBtn.addEventListener("click", () => {
+          if (confirm(`${item.title} ürünü sepetten çıkarılsın mı?`)) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartDisplay();
+          }
+        });
+
+        container.appendChild(itemDiv);
+      });
+
+      totalPriceElement.textContent = `Toplam Tutar: ₺${total.toFixed(2)}`;
+    }
+
+    function saveCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    clearBtn.addEventListener("click", () => {
+      if (cart.length > 0 && confirm("Sepeti tamamen temizlemek istediğinize emin misiniz?")) {
+        cart = [];
+        saveCart();
+        updateCartDisplay();
+      }
+    });
+
+    confirmBtn.addEventListener("click", () => {
+  if (cart.length === 0) return alert("Sepetiniz boş. Önce ürün ekleyin.");
+  alert("Sepetiniz başarıyla onaylandı. Teşekkürler!");
+  // Sepeti temizle
+  cart = [];
+  saveCart();
+  updateCartDisplay();
+  
+  // Banka bilgileri sayfasına yönlendir
+  window.location.href = "https://www.ziraatbank.com.tr/tr/bireysel/internet-subesi/odeme-islemleri";
+
+});
+
+
+    // Sayfa açılırken sepetteki ürünleri göster
+    updateCartDisplay();
+  </script>
+</body>
+</html>

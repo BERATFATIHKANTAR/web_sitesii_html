@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zümrüt Unlu Mamuller - Ürünler</title>
+<style>
+  /* Genel Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body, html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff8f0;
+    color: #333;
+    scroll-behavior: smooth;
+    min-height: 100vh;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Navbar */
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    z-index: 1000;
+    backdrop-filter: saturate(180%) blur(10px);
+  }
+  .navbar .logo {
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #a34700;
+    display: flex;
+    align-items: center;
+  }
+  .navbar .logo::before {
+    content: "🍞";
+    margin-right: 10px;
+  }
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+  }
+  .navbar ul li a {
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+    color: #6b3e00;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 1rem;
+  }
+  .navbar ul li a:hover,
+  .navbar ul li a.active {
+    background-color: #a34700;
+    color: #fff;
+  }
+  @media (max-width: 900px) {
+    .navbar {
+      flex-wrap: wrap;
+      padding: 15px 20px;
+    }
+    .navbar ul {
+      width: 100%;
+      justify-content: center;
+      margin-top: 10px;
+      gap: 15px;
+    }
+  }
+
+  /* Başlık Bölümü */
+  .hero-section {
+    margin-top: 70px;
+    text-align: center;
+    padding: 60px 20px 40px;
+    background: linear-gradient(135deg, #fceabb, #f8b500);
+    color: #5a2e00;
+    box-shadow: inset 0 0 40px rgba(255, 183, 0, 0.3);
+    border-radius: 12px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    font-weight: 800;
+    letter-spacing: 2px;
+  }
+  .hero-section p {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+    line-height: 1.4;
+  }
+  .hero-section .sub-text {
+    font-size: 1rem;
+    color: #633f00cc;
+  }
+
+  /* Ürünler Grid */
+  .products-container {
+    max-width: 1200px;
+    margin: 40px auto 80px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+    gap: 25px;
+  }
+
+  /* Tek Ürün Kutusu */
+  .product-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(163, 71, 0, 0.15);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(163, 71, 0, 0.3);
+  }
+  .product-image {
+    width: 102%;
+    height: 290px;
+    background-color: #f4e1c1;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    position: relative;
+  }
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .product-card:hover .product-image img {
+    transform: scale(1.1);
+  }
+
+  .product-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+    color: #a34700;
+    letter-spacing: 0.8px;
+  }
+  .product-desc {
+    flex-grow: 1;
+    font-size: 0.9rem;
+    color: #4b2b00;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+  .product-details {
+    font-size: 0.85rem;
+    color: #6b3e00cc;
+    margin-bottom: 18px;
+  }
+  .price {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #d84315;
+    margin-bottom: 18px;
+  }
+
+  .btn {
+    padding: 12px;
+    border: none;
+    background-color: #a34700;
+    color: white;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+  }
+  .btn:hover {
+    background-color: #7a2d00;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .hero-section h1 {
+      font-size: 2.2rem;
+    }
+    .hero-section p {
+      font-size: 1.1rem;
+    }
+    .products-container {
+      grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+      gap: 20px;
+    }
+  }
+
+  /* Scroll to top button */
+  .scroll-top {
+    position: fixed;
+    right: 20px;
+    bottom: 80px;
+    background-color: #a34700;
+    color: white;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(163, 71, 0, 0.4);
+    transition: background-color 0.3s ease;
+    z-index: 999;
+  }
+  .scroll-top:hover {
+    background-color: #7a2d00;
+  }
+
+  /* Detaylı ürün açıklaması stili */
+  .product-extra {
+    font-size: 0.8rem;
+    color: #7a4b00;
+    line-height: 1.4;
+    margin-top: 10px;
+  }
+
+  /* Buton icon */
+  .btn-cart::after {
+    content: " 🛒";
+    font-size: 1.1rem;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="logo">Zümrüt Ekmek Fabrikası</div>
+  <ul>
+    <li><a href="index.html">Ana Sayfa</a></li>
+    <li><a href="kurumsal.html">Kurumsal</a></li>
+    <li><a href="urunler.html" class="active">Ürünler</a></li>
+    <li><a href="sepet.html">Sepetim</a></li>
+
+  </ul>
+</nav>
+
+<!-- Başlık -->
+<section class="hero-section">
+  <h1>En Lezzetli Ekmek Çeşitlerimiz</h1>
+  <p>Geleneksel ve doğal yöntemlerle hazırlanan, taptaze ve sağlıklı ürünlerimizle sofralarınıza lezzet katıyoruz.</p>
+  <p class="sub-text">Her damak tadına uygun ekmek çeşidimizle tanışın.</p>
+</section>
+
+<!-- Ürünler -->
+<section class="products-container" aria-label="Ekmek çeşitleri">
+
+  <article class="product-card" tabindex="0" aria-describedby="desc1 price1">
+    <div class="product-image">
+      <img src="https://icdn.ensonhaber.com/crop/1060x795/resimler/diger/kok/2023/12/15/657c2ec534ee6183.jpg" alt="Beyaz Ekmek" loading="lazy" />
+    </div>
+    <h3 class="product-title">Beyaz Ekmek</h3>
+    <p id="desc1" class="product-desc">Klasik beyaz un kullanılarak günlük olarak hazırlanan yumuşacık ekmeğimiz.</p>
+    <p class="product-extra">İçindekiler: Un, su, maya, tuz</p>
+    <p id="price1" class="price">₺10,00 / adet</p>
+    <button class="btn btn-cart" aria-label="Sepete Ekmek ekle">Sepete Ekle</button>
+  </article>
+
+  <article class="product-card" tabindex="0" aria-describedby="desc2 price2">
+    <div class="product-image">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDzGUgu_Ads8VhOhlCMdqve8zeQNMbCdG5Yruhl1nSMgADH6vtC3IQrHkbgISWqtm0NYM&usqp=CAU" alt="Çok Tahıllı Ekmek" loading="lazy" />
+    </div>
+    <h3 class="product-title">Tahıllı Ekmek</h3>
+    <p id="desc2" class="product-desc">Çeşitli tahılların harmanlanmasıyla hazırlanan sağlıklı ve lezzetli seçenek.</p>
+    <p class="product-extra">İçindekiler: Buğday, arpa, yulaf, keten tohumu, susam</p>
+    <p id="price2" class="price">₺10,00 / adet</p>
+    <button class="btn btn-cart" aria-label="Sepete Ekmek ekle">Sepete Ekle</button>
+  </article>
+
+  <article class="product-card" tabindex="0" aria-describedby="desc3 price3">
+    <div class="product-image">
+      <img src="https://storage.kolaysiparis.com.tr/ks-prod/images/shop/64b7e1079117b/product/64bfe63d3dd2f/mRoO3TLlMOZNmrLzMhYAfa1a93JVhzcP0prV2WlK.jpg" alt="Kepekli Ekmek" loading="lazy" />
+    </div>
+    <h3 class="product-title">Kepekli Ekmek</h3>
+    <p id="desc3" class="product-desc">Rafine edilmemiş tam buğday unu ile hazırlanmış, lif açısından zengin ekmek.</p>
+    <p class="product-extra">İçindekiler: Kepekli un, su, maya, tuz</p>
+    <p id="price3" class="price">₺10,00 / adet</p>
+    <button class="btn btn-cart" aria-label="Sepete Ekmek ekle">Sepete Ekle</button>
+  </article>
+
+  <article class="product-card" tabindex="0" aria-describedby="desc4 price4">
+    <div class="product-image">
+      <img src="https://image.gazetevatan.com/i/gazetevatan/75/1200x0/648f22054f018179d205cd5e.jpg" alt="Siyah Çavdar Ekmeği" loading="lazy" />
+    </div>
+    <h3 class="product-title">300GR BEYAZ EKMEK</h3>
+    <p id="desc1" class="product-desc">Klasik beyaz un kullanılarak günlük olarak hazırlanan yumuşacık ekmeğimiz.</p>
+    <p class="product-extra">İçindekiler: Un, su, maya, tuz</p>
+    <p id="price4" class="price">₺15,00 / adet</p>
+    <button class="btn btn-cart" aria-label="Sepete  Ekmeği ekle">Sepete Ekle</button>
+  </article>
+
+  <article class="product-card" tabindex="0" aria-describedby="desc5 price5">
+    <div class="product-image">
+      <img src="https://lh5.googleusercontent.com/proxy/EP7mUOPySg2Y2xH67SDlASLpeAHSzwj3eOYLP-IJM_Khiq2xl8I_E0zZ1bbrrZWXUohCIctgIIr0aCZxV67RXqvYnknAzP9uVffT5H0R94TlHg" alt="Baget Ekmek" loading="lazy" />
+    </div>
+    <h3 class="product-title">Çiçek Ekmek</h3>
+    <p id="desc5" class="product-desc">Fransız usulü çiçek ekmek, dışı çıtır içi yumuşak.</p>
+    <p class="product-extra">İçindekiler: Un, su, maya, tuz,susam</p>
+    <p id="price5" class="price">₺10,00/ adet</p>
+    <button class="btn btn-cart" aria-label="Sepete Ekmek ekle">Sepete Ekle</button>
+  </article>
+
+  <article class="product-card" tabindex="0" aria-describedby="desc6 price6">
+    <div class="product-image">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqEE1LBN12Kyz8jQmPFU4RvY1nB3txOSOvSlnWLCDNoezBqE1x6xiIXsvVHSPhtRkZn-Y&usqp=CAU" alt="Fit Ekmek" loading="lazy" />
+    </div>
+    <h3 class="product-title">Tam buğday unlu Ekmek</h3>
+    <p id="desc6" class="product-desc">Az karbonhidratlı, protein ve lif açısından zengin diyet dostu ekmek.</p>
+    <p class="product-extra">İçindekiler: Tam buğday unu, su, maya</p>
+    <p id="price6" class="price">₺10,00 / adet</p>
+    <button class="btn btn-cart" aria-label="Sepete  Ekmek ekle">Sepete Ekle</button>
+  </article>
+
+  <article class="product-card" tabindex="0" aria-describedby="desc7 price7">
+    <div class="product-image">
+      <img src="https://lh5.googleusercontent.com/proxy/hVFUh0E8ptLF3OqrNZzr3FaGSK1gM9enJSVdqoSJsUzW6cvW6uEH3gTAHH8oIXLxXtvgXmwoPwK7Cyd_ShbxyQyLuKy4nE_bTf5yu9X6Ti8ObWfP" alt="Mahlepli Ekmek" loading="lazy" />
+    </div>
+    <h3 class="product-title">Susamlı Ekmek</h3>
+    <p id="desc7" class="product-desc">Susamla zenginleştirilmiş,  ekmek çeşidi.</p>
+    <p class="product-extra">İçindekiler: Un, Susam, maya, şeker, tuz</p>
+    <p id="price7" class="price">₺10,00 / adet</p>
+    <button class="btn btn-cart" aria-label="Sepete  Ekmek ekle">Sepete Ekle</button>
+  </article>
+
+  <article class="product-card" tabindex="0" aria-describedby="desc8 price8">
+    <div class="product-image">
+      <img src="https://recipesblob.droetker.com.tr/assets/ee85e80aa27144978d22770cc8ff7c13/1272x764/mayali_misir_ekmegijpg.jpg" alt="Mısır Ekmeği" loading="lazy" />
+    </div>
+    <h3 class="product-title">Mısır Ekmeği</h3>
+    <p id="desc8" class="product-desc">Mısır unu ile hazırlanan, hafif tatlımsı ve yumuşak dokulu ekmek.</p>
+    <p class="product-extra">İçindekiler: Mısır unu, un, maya, tuz, su</p>
+    <p id="price8" class="price">₺10,00 / adet</p>
+    <button class="btn btn-cart" aria-label="Sepete Mısır Ekmeği ekle">Sepete Ekle</button>
+  </article>
+
+  <article class="product-card" tabindex="0" aria-describedby="desc9 price9">
+    <div class="product-image">
+      <img src="https://i.ytimg.com/vi/MhhxQ35WYX0/hqdefault.jpg" alt="Kavlak Ekmek" loading="lazy" />
+    </div>
+    <h3 class="product-title">Yuvarlak Susamlı Ekmek</h3>
+    <p id="desc9" class="product-desc">Kabuğu sert, içi yumuşak ve dayanıklı ekmek türü.</p>
+    <p class="product-extra">İçindekiler: un, susam, maya, tuz</p>
+    <p id="price9" class="price">₺10,00 / adet</p>
+    <button class="btn btn-cart" aria-label="Sepete Kavlak Ekmek ekle">Sepete Ekle</button>
+  </article>
+
+  <article class="product-card" tabindex="0" aria-describedby="desc10 price10">
+    <div class="product-image">
+      <img src="https://corumhabernet.teimg.com/corumhaber-net/uploads/2024/08/haber2023/simitzam9696.jpg" alt="Ekşi Maya Ekmeği" loading="lazy" />
+    </div>
+    <h3 class="product-title">SİMİT</h3>
+    <h4 class="product-title">(ÇORUM simiti)</h4>
+    <p id="desc10" class="product-desc">Bol susamı ile gevrek çorum simiti...</p>
+    <p class="product-extra">İçindekiler: Un, su, doğal ekşi maya, tuz,susuam</p>
+    <p id="price10" class="price">₺15,00 / adet</p>
+    <button class="btn btn-cart" aria-label="Sepete Ekşi Maya Ekmeği ekle">Sepete Ekle</button>
+  </article>
+
+  <article class="product-card" tabindex="0" aria-describedby="desc11 price11">
+    <div class="product-image">
+      <img src="https://gurmella.com.tr/wp-content/uploads/2022/02/067841-GURMELLA-ANKARA-SoMoDo-ADET.jpg" alt="Diyet Ekmek" loading="lazy" />
+    </div>
+   <h3 class="product-title">SİMİT</h3>
+    <h4 class="product-title">(Ankara simiti)</h4>
+    <p id="desc10" class="product-desc">Bol susamı ile kıtır Ankara simiti...</p>
+    <p class="product-extra">İçindekiler:  un , su, maya, tuz,susam </p>
+    <p id="price11" class="price">₺15,00 / adet</p>
+    <button class="btn btn-cart" aria-label="Sepete Diyet Ekmek ekle">Sepete Ekle</button>
+  </article>
+
+  <article class="product-card" tabindex="0" aria-describedby="desc12 price12">
+    <div class="product-image">
+      <img src="https://static.ticimax.cloud/48857/uploads/urunresimleri/buyuk/7000059-81c-13.jpg" alt="Çavdar Bageti" loading="lazy" />
+    </div>
+    <h3 class="product-title">Poğaça Çeşitleri</h3>
+    <h4 class="product-title">(Patetesli,Peynirli  <br>,Çikolatalı,Zeytinli <br>,Sucuklu)</h4>
+    <p id="desc12" class="product-desc">İçi Bol malzemeli poğaçalarımız ile hizmetinizdeyiz...</p>
+    <p class="product-extra">İçindekiler:  un, maya, tuz, tereyağ</p>
+    <p id="price12" class="price">₺15,00/ adet</p>
+    <button class="btn btn-cart" aria-label="Sepete Çavdar Bageti ekle">Sepete Ekle</button>
+  </article>
+
+ 
+
+  </section>
+ <script>
+  const buttons = document.querySelectorAll('.btn-cart');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const productCard = button.closest('.product-card');
+      const title = productCard.querySelector('.product-title').innerText;
+      const desc = productCard.querySelector('.product-desc').innerText;
+      const price = productCard.querySelector('.price').innerText;
+      const image = productCard.querySelector('img').src;
+
+      const item = { title, desc, price, image };
+
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push(item);
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      alert("Ürün sepete eklendi!");
+    });
+  });
+</script>
+
+
+ 
+
+</body>

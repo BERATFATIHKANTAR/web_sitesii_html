@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zümrüt Unlu Mamuller</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    /* SLIDER BACKGROUND */
+    .slider {
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      z-index: -2;
+      top: 0; left: 0;
+    }
+
+    .slider img {
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slider img.active {
+      opacity: 1;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: -1;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      color: white;
+      position: fixed;
+      width: 100%;
+      z-index: 10;
+      background-color: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(6px);
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .navbar ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+    }
+
+    .navbar ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar ul li a:hover,
+    .navbar ul li a.active {
+      background-color: red;
+    }
+
+    /* HERO */
+    .hero-text {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      font-size: 1.4rem;
+      margin-bottom: 25px;
+    }
+
+    .hero-text a {
+      background-color: red;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* CONTACT SECTION */
+    .contact {
+      background: #f5f5f5;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .contact h2 {
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      color: #333;
+    }
+
+    .contact-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .contact-form,
+    .contact-info {
+      flex: 1 1 300px;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .contact-form form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .contact-form button {
+      padding: 14px;
+      border: none;
+      background-color: red;
+      color: white;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .contact-form button:hover {
+      background-color: darkred;
+    }
+
+    .contact-info h3 {
+      margin-bottom: 15px;
+      color: #8B0000;
+    }
+
+    .contact-info p {
+      text-align: left;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    /* WHATSAPP BUTTON */
+    .whatsapp {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #25D366;
+      color: white;
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 24px;
+      z-index: 999;
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        padding: 15px;
+      }
+
+      .navbar ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+
+      .hero-text p {
+        font-size: 1rem;
+      }
+
+      .contact-container {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slider -->
+  <div class="slider">
+   
+    <img src="https://www.alaybeyi.com.tr/blog/wp-content/uploads/2023/04/dunyanin-farkli-kulturlerindeki-ekmek-cesitleri-1-1230x654-1-1.webp" class="active">
+    <img src="https://www.vakfikebir.bel.tr/dosyalar/page_40/1510925096_1.jpg">
+    <img src="https://evimicin.evidea.com/wp-content/uploads/2023/08/0011_shutterstock_81355249.jpg">
+  </div>
+  <div class="overlay"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="ZÜMRÜT1.png" alt="Zümrüt Ekmek Fabrikası">
+      Zümrüt Ekmek Fabrikası
+    </div>
+    <ul>
+      <li><a href="#" class="active">Ana Sayfa</a></li>
+      <li><a href="kurumsal.html">Kurumsal</a></li>
+      <li><a href="ürünler.html">Ürünler</a></li>
+      <li><a href="#iletisim">İletişim</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero-text">
+    <h1>Ekmek bizim işimiz...</h1>
+    <p>Ekmek çeşitlerimizi beğeninize sunduk</p>
+    <a href="ürünler.html">İNCELE</a>
+  </div>
+
+ <section class="contact" id="iletisim">
+  <h2>İletişim</h2>
+  <div class="contact-container">
+    <div class="contact-form">
+      <form>
+        <input type="text" name="name" placeholder="Adınız Soyadınız" required>
+        <input type="email" name="email" placeholder="E-posta Adresiniz" required>
+        <textarea name="message" rows="5" placeholder="Mesajınız..." required></textarea>
+        <button type="submit">Gönder</button>
+      </form>
+    </div>
+    <div class="contact-info">
+      <h3>Bize Ulaşın</h3>
+      <p><strong>Adres:</strong><br> Zümrüt Ekmek Fabriksaı, Gülabibey Mahallesi Bağcılar 4. Cadde No:32</p>
+      <p><strong>Telefon:</strong><br> 0 (212) 123 45 67</p>
+      <p><strong>E-posta:</strong><br> zumrutekmekfirin@gmail.com</p>
+    </div>
+  </div>
+</section>
+
+  <!-- WhatsApp -->
+  <a href="https://wa.me/905523380019" class="whatsapp" target="_blank">💬</a>
+
+  <!-- Slider JS -->
+  <script>
+    const slides = document.querySelectorAll('.slider img');
+    let index = 0;
+
+    setInterval(() => {
+      slides[index].classList.remove('active');
+      index = (index + 1) % slides.length;
+      slides[index].classList.add('active');
+    }, 4000);
+  </script>
+
+</body>
+</html>
